@@ -1,0 +1,8 @@
+D:\Code\C#\kursovaVSP\kursovaVSP\bin\x64\Release\kursovaVSP.exe.config
+D:\Code\C#\kursovaVSP\kursovaVSP\bin\x64\Release\kursovaVSP.exe
+D:\Code\C#\kursovaVSP\kursovaVSP\bin\x64\Release\kursovaVSP.pdb
+D:\Code\C#\kursovaVSP\kursovaVSP\obj\x64\Release\kursovaVSP.Form1.resources
+D:\Code\C#\kursovaVSP\kursovaVSP\obj\x64\Release\kursovaVSP.Properties.Resources.resources
+D:\Code\C#\kursovaVSP\kursovaVSP\obj\x64\Release\kursovaVSP.csproj.GenerateResource.Cache
+D:\Code\C#\kursovaVSP\kursovaVSP\obj\x64\Release\kursovaVSP.exe
+D:\Code\C#\kursovaVSP\kursovaVSP\obj\x64\Release\kursovaVSP.pdb
