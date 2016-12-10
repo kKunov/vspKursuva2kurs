@@ -13,9 +13,11 @@ namespace kursovaVSP
 {
     public partial class Form1 : Form
     {
+        private bool isFirstTimeInbeckwardsWay = true; // 
+
         public Form1()
         {
-            InitializeComponent();
+            InitializeComponent(); // ot tuk se risuva formata, vsicki butoni i t.n.
         }
 
 
@@ -24,7 +26,7 @@ namespace kursovaVSP
         /// </summary>
         private string GetPathFromTheDialog(string startFolder)
         {
-            var fbd = new FolderBrowserDialog();
+            var fbd = new FolderBrowserDialog(); // sazdavame si promenlivata fbd ot tip klasa FolderBrowserDialog
             fbd.SelectedPath = startFolder;
             fbd.ShowDialog();
 
@@ -34,7 +36,7 @@ namespace kursovaVSP
             return "";
         }
         
-        private void btnSource_Click(object sender, EventArgs e)
+        private void btnSource_Click(object sender, EventArgs e) // pri klikvane na btnSource se izvikva tazi funkcia
         {
             string startFolder = "";
 
@@ -62,27 +64,27 @@ namespace kursovaVSP
         {
             tbDest.Text = "";
             tbSource.Text = "";
-            lbExceptions.Items.Clear(); ;
+            lbExceptions.Items.Clear();
             cbInBothWays.Checked = false;
         }
 
         /// <summary>
         /// This function calls the File Browser Dialog and waits the user to chose file or files to add to exceptions list
         /// </summary>
-        private void btnException_Click(object sender, EventArgs e)
+        private void btnException_Click(object sender, EventArgs e) // browse exceptio button on click
         {
             var ofd = new OpenFileDialog();
             ofd.AddExtension = true;
             ofd.Multiselect = true;
             ofd.ShowDialog();
 
-            for (int i = 0; i < ofd.SafeFileNames.Length; i++)
-                 lbExceptions.Items.Add(ofd.FileNames[i]);
+            for (int i = 0; i < ofd.SafeFileNames.Length; i++) // vsichki selektirani failove se dobavqt v lista s izkliucheniata
+                 lbExceptions.Items.Add(ofd.FileNames[i]); // dobavq palnia pat do faila
         }
 
         private void btnRemove_Click(object sender, EventArgs e)
         {
-            for (int i = lbExceptions.SelectedItems.Count - 1; i >= 0; i--)
+            for (int i = lbExceptions.SelectedItems.Count - 1; i >= 0; i--)    //vurti ot zad napred
                 lbExceptions.Items.Remove(lbExceptions.SelectedItems[i]);
         }
 
@@ -114,15 +116,18 @@ namespace kursovaVSP
         /// <summary>
         /// This function gets all subdirectories of the argument directory "startingFolder"
         /// </summary>
-        public static List<string> GetTheFolders(string startingFolder)
+        public static List<string> GetTheFolders(string startingFolder, bool isFirst = true)
         {
             var subFolders = new List<string>();
 
-            subFolders = Directory.GetDirectories(startingFolder).ToList();
+            if (isFirst)
+                subFolders.Add(startingFolder);
+
+            subFolders.AddRange(Directory.GetDirectories(startingFolder).ToList());
 
             for (int i = 0; i < subFolders.Count; i++)
             {
-                subFolders.AddRange(GetTheFolders(subFolders[i]));
+                subFolders.AddRange(GetTheFolders(subFolders[i], false)); // rekursia zaradi tozi red, zashtoto funkciata se zamoizvikva tuk
             }
 
             return subFolders;
@@ -178,12 +183,15 @@ namespace kursovaVSP
         /// </summary>
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            if (cbInBothWays.Checked)
+            if (cbInBothWays.Checked && isFirstTimeInbeckwardsWay)
             {
                 gbProgFirst.Text = "Progress backwards way:";
                 UpdateFolder(tbDest.Text, tbSource.Text);
                 gbProgFirst.Text = "Progress strigth way:";
+                isFirstTimeInbeckwardsWay = false;
             }
+            else
+                isFirstTimeInbeckwardsWay = true;
         }
     }
 }
